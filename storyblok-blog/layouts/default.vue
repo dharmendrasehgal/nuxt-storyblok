@@ -1,8 +1,21 @@
 <template>
   <div>
-    <nuxt />
+    <the-header />
+    <div class="main-container">
+      <nuxt />
+    </div>
   </div>
 </template>
+
+<script>
+  import TheHeader from '@/components/TheHeader/TheHeader';
+
+  export default {
+    components: {
+      TheHeader
+    }
+  }
+</script>
 
 <style>
 html {
@@ -51,5 +64,9 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+.main-container {
+  margin-top: 4.5rem;
 }
 </style>

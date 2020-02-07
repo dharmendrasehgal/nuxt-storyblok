@@ -1,39 +1,35 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        storyblok-blog
-      </h1>
-      <h2 class="subtitle">
-        Awesome blog
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div id="container">
+    <section v-for="post in posts" :key="post.id">
+      <post-review :id="post.id" :title="post.title" :excerpt="post.previewText" :thumbnailImage="post.thumbnailUrl" />
+    </section>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import PostReview from '@/components/Blog/PostReview';
 
 export default {
+  data() {
+    return {
+      posts: [
+        {
+          title:"Blog Title 1",
+          previewText: "Some text",
+          thumbnailUrl: "https://www.xyzapk.com/wp-content/uploads/2017/11/com.logopit.thumbnailMaker.jpg.png",
+          id: "a-new-begening"
+        },
+        {
+          title:"Blog Title 2",
+          previewText: "Some text",
+          thumbnailUrl: "https://www.xyzapk.com/wp-content/uploads/2017/11/com.logopit.thumbnailMaker.jpg.png",
+          id: "2nd-new-begening"
+        }
+      ]
+    }
+  },
   components: {
-    Logo
+    PostReview
   }
 }
 </script>
@@ -68,5 +64,16 @@ export default {
 
 .links {
   padding-top: 15px;
+}
+#container {
+  padding: 2rem;
+  display: flex;
+  align-item: center;
+  justify-content: center;
+  xflex-direction: column;
+}
+#container .card {
+  margin: 2rem;
+  border: none;
 }
 </style>
