@@ -1,7 +1,7 @@
 <template>
-  <div id="container">
+  <div id="container" class="BlogComponent">
     <section v-for="post in posts" :key="post.id">
-      <post-review :id="post.id" :title="post.title" :excerpt="post.previewText" :thumbnailImage="post.thumbnailUrl" />
+      <post-review :id="post.slug" :title="post.title" :excerpt="post.previewText" :thumbnailImage="post.thumbnailUrl" />
     </section>
   </div>
 </template>
@@ -10,23 +10,26 @@
 import PostReview from '@/components/Blog/PostReview';
 
 export default {
-  data() {
-    return {
-      posts: [
-        {
-          title:"Blog Title 1",
-          previewText: "Some text",
-          thumbnailUrl: "https://www.xyzapk.com/wp-content/uploads/2017/11/com.logopit.thumbnailMaker.jpg.png",
-          id: "a-new-begening"
-        },
-        {
-          title:"Blog Title 2",
-          previewText: "Some text",
-          thumbnailUrl: "https://www.xyzapk.com/wp-content/uploads/2017/11/com.logopit.thumbnailMaker.jpg.png",
-          id: "2nd-new-begening"
-        }
-      ]
-    }
+  asyncData(context) {
+    return context.app.$storyapi.get('cdn/stories', {
+      starts_with: 'post/'
+    })
+    .then((res) => {
+      return {
+        posts: res.data.stories.map((bp) => {
+          return {
+            id: bp.content._uid,
+            title: bp.content.title,
+            previewText: bp.content.summary,
+            thumbnailUrl: bp.content.image,
+            slug: bp.slug
+          };
+        })
+      }
+    })
+    .catch(err => {
+      console.log('err: ',err);
+    })
   },
   components: {
     PostReview
